@@ -13,7 +13,7 @@ class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        view.backgroundColor = .black
+        view.backgroundColor = .systemBackground
         
         let vc1 = UINavigationController(rootViewController: HomeViewController())
         let vc2 = UINavigationController(rootViewController: UpcomingViewController())

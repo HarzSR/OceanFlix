@@ -35,28 +35,6 @@ class HeroHeaderUIView: UIView {
         return button
     }()
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateButtonColors(for: playButton)
-            updateButtonColors(for: downloadButton)
-        }
-    }
-
-    func updateButtonColors(for buttonChange: UIButton) {
-        if traitCollection.userInterfaceStyle == .dark {
-            buttonChange.layer.borderColor = UIColor.white.cgColor
-            buttonChange.backgroundColor = .systemBackground // Invert to light background
-            buttonChange.setTitleColor(.white, for: .normal) // Invert to dark text color
-        }
-        else {
-            buttonChange.layer.borderColor = UIColor.black.cgColor
-            buttonChange.backgroundColor = .systemBackground // Invert to dark background
-            buttonChange.setTitleColor(.black, for: .normal) // Invert to light text color
-        }
-    }
-    
     private let heroImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -67,20 +45,10 @@ class HeroHeaderUIView: UIView {
 
     private func addGradiant() {
         let gradientLayer = CAGradientLayer()
-        
-        if traitCollection.userInterfaceStyle == .dark {
-            gradientLayer.colors = [
-                UIColor.clear.cgColor,
-                UIColor.black.cgColor
-            ]
-        }
-        else {
-            gradientLayer.colors = [
-                UIColor.clear.cgColor,
-                UIColor.white.cgColor
-            ]
-        }
-        
+        gradientLayer.colors = [
+            UIColor.clear.cgColor,
+            UIColor.systemBackground.cgColor
+        ]
         gradientLayer.frame = bounds
         layer.addSublayer(gradientLayer)
     }
@@ -99,7 +67,6 @@ class HeroHeaderUIView: UIView {
         constraints.append(button.widthAnchor.constraint(equalToConstant: widthConstant))
         
         NSLayoutConstraint.activate(constraints)
-        
         
     }
     
