@@ -91,6 +91,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return sectionTitles[section]
     }
     
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else {
+            return
+        }
+        header.textLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
+        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 10, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
+        header.textLabel?.textColor = .white
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let defaultOffSet = view.safeAreaInsets.top
         let offset = scrollView.contentOffset.y + defaultOffSet
