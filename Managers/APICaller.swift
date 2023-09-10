@@ -37,6 +37,7 @@ class APICaller {
                 print(httpResponse)
             }
         })
+        task?.resume()
     }
     
 }
