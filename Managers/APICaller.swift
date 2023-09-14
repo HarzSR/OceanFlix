@@ -45,4 +45,92 @@ class APICaller {
         task.resume()
     }
     
+    func getTrendingTvs(completion: @escaping (Result<[Tv], Error>) -> Void) {
+        guard let url = URL(string: "\(Constants.baseURL)trending/tv/day?language=en-US") else { return }
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            do {
+                // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                // print(results)
+                let results = try JSONDecoder().decode(TrendingTvsResponse.self, from: data)
+                completion(.success(results.results))
+            }
+            catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    func getUpComingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+        guard let url = URL(string: "\(Constants.baseURL)movie/upcoming?language=en-US") else { return }
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            do {
+                // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                // print(results)
+                let results = try JSONDecoder().decode(TrendingMoviesResponse.self, from: data)
+                completion(.success(results.results))
+            }
+            catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    func getPopularMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+        guard let url = URL(string: "\(Constants.baseURL)movie/popular?language=en-US") else { return }
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            do {
+                // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                // print(results)
+                let results = try JSONDecoder().decode(TrendingMoviesResponse.self, from: data)
+                completion(.success(results.results))
+            }
+            catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    func getTopRatedMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+        guard let url = URL(string: "\(Constants.baseURL)movie/top_rated?language=en-US") else { return }
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            do {
+                // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                // print(results)
+                let results = try JSONDecoder().decode(TrendingMoviesResponse.self, from: data)
+                completion(.success(results.results))
+            }
+            catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
 }
