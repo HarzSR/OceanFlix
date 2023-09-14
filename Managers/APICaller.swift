@@ -23,7 +23,7 @@ class APICaller {
     
     static let shared = APICaller()
     
-    func getTrendingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func getTrendingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseURL)trending/movie/day?language=en-US") else { return }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -35,17 +35,17 @@ class APICaller {
             do {
                 // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
                 // print(results)
-                let results = try JSONDecoder().decode(TrendingMoviesResponse.self, from: data)
+                let results = try JSONDecoder().decode(AllResponse.self, from: data)
                 completion(.success(results.results))
             }
             catch {
-                completion(.failure(error))
+                completion(.failure(APIError.failedTogetData))
             }
         }
         task.resume()
     }
     
-    func getTrendingTvs(completion: @escaping (Result<[Tv], Error>) -> Void) {
+    func getTrendingTvs(completion: @escaping (Result<[Title], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseURL)trending/tv/day?language=en-US") else { return }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -57,17 +57,17 @@ class APICaller {
             do {
                 // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
                 // print(results)
-                let results = try JSONDecoder().decode(TrendingTvsResponse.self, from: data)
+                let results = try JSONDecoder().decode(AllResponse.self, from: data)
                 completion(.success(results.results))
             }
             catch {
-                completion(.failure(error))
+                completion(.failure(APIError.failedTogetData))
             }
         }
         task.resume()
     }
     
-    func getUpComingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func getUpComingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseURL)movie/upcoming?language=en-US") else { return }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -79,17 +79,17 @@ class APICaller {
             do {
                 // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
                 // print(results)
-                let results = try JSONDecoder().decode(TrendingMoviesResponse.self, from: data)
+                let results = try JSONDecoder().decode(AllResponse.self, from: data)
                 completion(.success(results.results))
             }
             catch {
-                completion(.failure(error))
+                completion(.failure(APIError.failedTogetData))
             }
         }
         task.resume()
     }
     
-    func getPopularMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func getPopularMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseURL)movie/popular?language=en-US") else { return }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -101,17 +101,17 @@ class APICaller {
             do {
                 // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
                 // print(results)
-                let results = try JSONDecoder().decode(TrendingMoviesResponse.self, from: data)
+                let results = try JSONDecoder().decode(AllResponse.self, from: data)
                 completion(.success(results.results))
             }
             catch {
-                completion(.failure(error))
+                completion(.failure(APIError.failedTogetData))
             }
         }
         task.resume()
     }
     
-    func getTopRatedMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func getTopRatedMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseURL)movie/top_rated?language=en-US") else { return }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -123,11 +123,11 @@ class APICaller {
             do {
                 // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
                 // print(results)
-                let results = try JSONDecoder().decode(TrendingMoviesResponse.self, from: data)
+                let results = try JSONDecoder().decode(AllResponse.self, from: data)
                 completion(.success(results.results))
             }
             catch {
-                completion(.failure(error))
+                completion(.failure(APIError.failedTogetData))
             }
         }
         task.resume()
