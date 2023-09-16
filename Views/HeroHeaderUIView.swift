@@ -20,7 +20,8 @@ class HeroHeaderUIView: UIView {
     private let playButton: UIButton = {
         let button = UIButton()
         button.setTitle("Play", for: .normal)
-        button.layer.borderColor = UIColor.white.cgColor
+        button.setTitleColor(UIColor.label, for: .normal)
+        button.layer.borderColor = UIColor.label.cgColor
         button.layer.borderWidth = 1
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 5
@@ -30,7 +31,8 @@ class HeroHeaderUIView: UIView {
     private let downloadButton: UIButton = {
         let button = UIButton()
         button.setTitle("Download", for: .normal)
-        button.layer.borderColor = UIColor.white.cgColor
+        button.setTitleColor(UIColor.label, for: .normal)
+        button.layer.borderColor = UIColor.label.cgColor
         button.layer.borderWidth = 1
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 5

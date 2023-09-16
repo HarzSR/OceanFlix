@@ -23,6 +23,28 @@ class APICaller {
     
     static let shared = APICaller()
     
+    func getNowPlayingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
+        guard let url = URL(string: "\(Constants.baseURL)movie/now_playing?language=en-US") else { return }
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            do {
+                // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                // print(results)
+                let results = try JSONDecoder().decode(AllResponse.self, from: data)
+                completion(.success(results.results))
+            }
+            catch {
+                completion(.failure(APIError.failedTogetData))
+            }
+        }
+        task.resume()
+    }
+    
     func getTrendingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseURL)trending/movie/day?language=en-US") else { return }
         var request = URLRequest(url: url)
