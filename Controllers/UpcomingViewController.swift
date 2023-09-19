@@ -9,6 +9,8 @@ import UIKit
 
 class UpcomingViewController: UIViewController {
     
+    private var titles: [Title] = [Title]()
+    
     private let upcomingTable: UITableView = {
         let table = UITableView()
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -17,6 +19,9 @@ class UpcomingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        
         view.backgroundColor = UIColor.systemBackground
         title = "Upcoming"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -25,10 +30,29 @@ class UpcomingViewController: UIViewController {
         view.addSubview(upcomingTable)
         upcomingTable.delegate = self
         upcomingTable.dataSource = self
-
-        // Do any additional setup after loading the view.
+        
+        fetchUpcoming()
         
         // view.backgroundColor = .systemBackground
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        upcomingTable.frame = view.bounds
+    }
+    
+    private func fetchUpcoming() {
+        APICaller.shared.getUpComingMovies { [ weak self ] results in
+            switch results {
+            case .success(let titles):
+                self?.titles = titles
+                DispatchQueue.main.async {
+                    self?.upcomingTable.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
     /*
@@ -45,12 +69,12 @@ class UpcomingViewController: UIViewController {
 
 extension UpcomingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return titles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Test"
+        cell.textLabel?.text = titles[indexPath.row].original_name ?? titles[indexPath.row].original_title ?? "Unknown"
         return cell
     }
 }
