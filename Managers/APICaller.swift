@@ -155,4 +155,26 @@ class APICaller {
         task.resume()
     }
     
+    func getDiscoverMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
+        guard let url = URL(string: "\(Constants.baseURL)discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc") else { return }
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            do {
+                // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                // print(results)
+                let results = try JSONDecoder().decode(AllResponse.self, from: data)
+                completion(.success(results.results))
+            }
+            catch {
+                completion(.failure(APIError.failedTogetData))
+            }
+        }
+        task.resume()
+    }
+    
 }
