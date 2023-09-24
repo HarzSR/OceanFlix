@@ -8,6 +8,17 @@
 import UIKit
 
 class SearchResultsViewController: UIViewController {
+    
+    private var titles: [Title] = [Title]()
+    
+    private let searchResultsCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width / 3) - 10, height: 200)
+        layout.minimumInteritemSpacing = 0
+        let collectiveView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectiveView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
+        return collectiveView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,14 +26,19 @@ class SearchResultsViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         view.backgroundColor = UIColor.systemBackground
-        title = "Upcoming"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
+        
+        view.addSubview(searchResultsCollectionView)
+        searchResultsCollectionView.delegate = self
+        searchResultsCollectionView.dataSource = self
         
         // view.backgroundColor = .systemBackground
     }
     
-
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchResultsCollectionView.frame = view.bounds
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -33,4 +49,19 @@ class SearchResultsViewController: UIViewController {
     }
     */
 
+}
+
+extension SearchResultsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.identifier, for: indexPath) as? TitleCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        cell.backgroundColor = .red
+        return cell
+    }
 }
