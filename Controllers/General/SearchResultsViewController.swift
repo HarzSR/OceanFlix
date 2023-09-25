@@ -11,13 +11,13 @@ class SearchResultsViewController: UIViewController {
     
     private var titles: [Title] = [Title]()
     
-    private let searchResultsCollectionView: UICollectionView = {
+    public let searchResultsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width / 3) - 10, height: 200)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3 - 10, height: 200)
         layout.minimumInteritemSpacing = 0
-        let collectiveView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectiveView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
-        return collectiveView
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
+        return collectionView
     }()
 
     override func viewDidLoad() {
