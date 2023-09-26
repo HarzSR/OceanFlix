@@ -177,4 +177,27 @@ class APICaller {
         task.resume()
     }
     
+    func searchMovies(with query: String, completion: @escaping (Result<[Title], Error>) -> Void) {
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        guard let url = URL(string: "\(Constants.baseURL)search/movie?query\(query)&api_key=\(Constants.API_KEY)") else { return }
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            do {
+                // let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                // print(results)
+                let results = try JSONDecoder().decode(AllResponse.self, from: data)
+                completion(.success(results.results))
+            }
+            catch {
+                completion(.failure(APIError.failedTogetData))
+            }
+        }
+        task.resume()
+    }
+    
 }
