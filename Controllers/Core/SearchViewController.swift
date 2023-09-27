@@ -106,9 +106,9 @@ extension SearchViewController: UISearchResultsUpdating {
               !query.trimmingCharacters(in: .whitespaces).isEmpty,
               query.trimmingCharacters(in: .whitespaces).count >= 3,
               
-                let resultsController = searchController.searchResultsUpdater as? SearchResultsViewController else {
-                    return
-                }
+              let resultsController = searchController.searchResultsController as? SearchResultsViewController else {
+                return
+              }
         
         APICaller.shared.searchMovies(with: query) { result in
             DispatchQueue.main.async {

@@ -195,10 +195,9 @@ class APICaller {
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             return
         }
-        guard let url = URL(string: "\(Constants.baseURL)search/movie?query\(query)&api_key=\(Constants.API_KEY)") else {
+        guard let url = URL(string: "\(Constants.baseURL)search/movie?query=\(query)&api_key=\(Constants.API_KEY)") else {
             return
         }
-        print(url)
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
