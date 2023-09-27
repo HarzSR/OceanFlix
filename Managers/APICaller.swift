@@ -24,7 +24,9 @@ class APICaller {
     static let shared = APICaller()
     
     func getNowPlayingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
-        guard let url = URL(string: "\(Constants.baseURL)movie/now_playing?language=en-US") else { return }
+        guard let url = URL(string: "\(Constants.baseURL)movie/now_playing?language=en-US") else {
+            return
+        }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
@@ -46,7 +48,9 @@ class APICaller {
     }
     
     func getTrendingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
-        guard let url = URL(string: "\(Constants.baseURL)trending/movie/day?language=en-US") else { return }
+        guard let url = URL(string: "\(Constants.baseURL)trending/movie/day?language=en-US") else {
+            return
+        }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
@@ -68,7 +72,9 @@ class APICaller {
     }
     
     func getTrendingTvs(completion: @escaping (Result<[Title], Error>) -> Void) {
-        guard let url = URL(string: "\(Constants.baseURL)trending/tv/day?language=en-US") else { return }
+        guard let url = URL(string: "\(Constants.baseURL)trending/tv/day?language=en-US") else {
+            return
+        }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
@@ -90,7 +96,9 @@ class APICaller {
     }
     
     func getUpComingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
-        guard let url = URL(string: "\(Constants.baseURL)movie/upcoming?language=en-US") else { return }
+        guard let url = URL(string: "\(Constants.baseURL)movie/upcoming?language=en-US") else {
+            return
+        }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
@@ -112,7 +120,9 @@ class APICaller {
     }
     
     func getPopularMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
-        guard let url = URL(string: "\(Constants.baseURL)movie/popular?language=en-US") else { return }
+        guard let url = URL(string: "\(Constants.baseURL)movie/popular?language=en-US") else {
+            return
+        }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
@@ -134,7 +144,9 @@ class APICaller {
     }
     
     func getTopRatedMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
-        guard let url = URL(string: "\(Constants.baseURL)movie/top_rated?language=en-US") else { return }
+        guard let url = URL(string: "\(Constants.baseURL)movie/top_rated?language=en-US") else {
+            return
+        }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
@@ -156,7 +168,9 @@ class APICaller {
     }
     
     func getDiscoverMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
-        guard let url = URL(string: "\(Constants.baseURL)discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc") else { return }
+        guard let url = URL(string: "\(Constants.baseURL)discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc") else {
+            return
+        }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
@@ -178,8 +192,13 @@ class APICaller {
     }
     
     func searchMovies(with query: String, completion: @escaping (Result<[Title], Error>) -> Void) {
-        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-        guard let url = URL(string: "\(Constants.baseURL)search/movie?query\(query)&api_key=\(Constants.API_KEY)") else { return }
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            return
+        }
+        guard let url = URL(string: "\(Constants.baseURL)search/movie?query\(query)&api_key=\(Constants.API_KEY)") else {
+            return
+        }
+        print(url)
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(Constants.bearer, forHTTPHeaderField: "Authorization")
